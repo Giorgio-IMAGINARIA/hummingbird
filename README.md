@@ -1,3 +1,8 @@
+To start the app:
+1. Install yarn
+2. Build it by typing "yarn"
+3. type "yarn start"
+
 # Hummingbird Frontend Test Starter App
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
