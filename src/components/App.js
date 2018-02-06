@@ -11,10 +11,10 @@ import SwipeableViews from 'react-swipeable-views';
 //React Modules
 import MainBarUI from './MainBarUI.react';
 import MapModule from './MapModule.react';
+import FieldsModule from './FieldsModule.react';
 // Style Modules
 import AppRootStyle from '../styles/AppRootStyle';
-
-import farm from '../data/farm.json';
+// Data
 import crops from '../data/crops.json';
 
 class App extends Component {
@@ -22,11 +22,7 @@ class App extends Component {
     super(props);
     this.handleChangeTab = this.handleChangeTab.bind(this);
     this.state = {
-      slideIndex: 0,
-      mapDimensions: {
-        width: '100%',
-        height: '500px'
-      }
+      slideIndex: 0
     };
 
   }
@@ -50,12 +46,7 @@ class App extends Component {
 
           <MapModule/>
 
-
-            <div>
-              <ul>
-                {crops.map(crop => <li key={crop.name}>{crop.name}</li>)}
-              </ul>
-            </div>
+          <FieldsModule/>
 
 
             <div>
