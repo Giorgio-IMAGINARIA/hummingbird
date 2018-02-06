@@ -12,10 +12,9 @@ import SwipeableViews from 'react-swipeable-views';
 import MainBarUI from './MainBarUI.react';
 import MapModule from './MapModule.react';
 import FieldsModule from './FieldsModule.react';
+import CropsModule from './CropsModule.react';
 // Style Modules
 import AppRootStyle from '../styles/AppRootStyle';
-// Data
-import crops from '../data/crops.json';
 
 class App extends Component {
   constructor(props) {
@@ -43,19 +42,9 @@ class App extends Component {
             <Tab icon={<CropIcon />} value={2} label="Crops"/>
           </Tabs>
           <SwipeableViews style={AppRootStyle.swipeableViewsStyle} index={this.state.slideIndex} onChangeIndex={this.handleChange}>
-
-          <MapModule/>
-
-          <FieldsModule/>
-
-
-            <div>
-              <ul>
-                {crops.map(crop => <li key={crop.name}>{crop.name}</li>)}
-              </ul>
-            </div>
-
-
+            <MapModule/>
+            <FieldsModule/>
+            <CropsModule/>
           </SwipeableViews>
         </div>
       </MuiThemeProvider>
