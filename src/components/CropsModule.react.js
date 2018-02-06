@@ -25,13 +25,14 @@ class CropsModule extends Component {
   }
 
   createCropsTable() {
-    let nextArray: Array<any> = farm.fields;
+    let nextArray: Array<any> = crops;
     let cropsList: Array<any> = [];
     nextArray.forEach((item, index) => {
       let elementToCreate: any = <TableRow key={index}>
         <TableRowColumn>{item.name}</TableRowColumn>
-        <TableRowColumn>{item.hectares}</TableRowColumn>
-        <TableRowColumn>{item.disease_susceptibility}</TableRowColumn>
+        <TableRowColumn>{item.expected_yield}</TableRowColumn>
+        <TableRowColumn>{item.disease_risk_factor}</TableRowColumn>
+        <TableRowColumn>{item.price_per_tonne}</TableRowColumn>
       </TableRow>;
       cropsList.push(elementToCreate);
     });
@@ -49,8 +50,9 @@ class CropsModule extends Component {
         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
           <TableRow>
             <TableHeaderColumn>Name</TableHeaderColumn>
-            <TableHeaderColumn>ha</TableHeaderColumn>
-            <TableHeaderColumn>Ds</TableHeaderColumn>
+            <TableHeaderColumn>Ey</TableHeaderColumn>
+            <TableHeaderColumn>Drf</TableHeaderColumn>
+            <TableHeaderColumn>£/t</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
