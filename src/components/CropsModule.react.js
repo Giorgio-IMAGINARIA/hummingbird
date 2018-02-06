@@ -17,29 +17,29 @@ import crops from '../data/crops.json';
 class CropsModule extends Component {
   constructor(props) {
     super(props);
-    this.createFieldTable = this.createFieldTable.bind(this);
+    this.createCropsTable = this.createCropsTable.bind(this);
     this.state = {
-      fieldsArray: []
+      cropsArray: []
     };
 
   }
 
-  createFieldTable() {
+  createCropsTable() {
     let nextArray: Array<any> = farm.fields;
-    let fieldList: Array<any> = [];
+    let cropsList: Array<any> = [];
     nextArray.forEach((item, index) => {
       let elementToCreate: any = <TableRow key={index}>
         <TableRowColumn>{item.name}</TableRowColumn>
         <TableRowColumn>{item.hectares}</TableRowColumn>
         <TableRowColumn>{item.disease_susceptibility}</TableRowColumn>
       </TableRow>;
-      fieldList.push(elementToCreate);
+      cropsList.push(elementToCreate);
     });
-    this.setState({fieldsArray: fieldList});
+    this.setState({cropsArray: cropsList});
   }
 
   componentWillMount() {
-    this.createFieldTable();
+    this.createCropsTable();
   }
 
   render() {
@@ -54,7 +54,7 @@ class CropsModule extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-          {this.state.fieldsArray}
+          {this.state.cropsArray}
         </TableBody>
       </Table>
     </div>);
