@@ -50,7 +50,7 @@ class MainBarUI extends React.Component {
         this.handleClose
       } />];
     return (
-      <AppBar title="Hummingbird" style={this.appBarStyle} iconElementLeft={< IconButton onTouchTap = {
+      <AppBar title="Hummingbird farm view" style={this.appBarStyle} iconElementLeft={< IconButton onTouchTap = {
         this.onLeftIconButtonTouchTap
       } tooltip="Help"
       tooltipPosition="bottom-right" > <Help/> < /IconButton>} iconElementRight={< LoginBlockUI />} iconStyleRight={this.rightIconStyle}>
