@@ -9,6 +9,7 @@
     "react-dom": "^16.0.0",
     "react-leaflet": "^1.7.1",
     "react-scripts": "1.0.17",
+    "react-swipeable-views": "^0.12.12",
     "react-tap-event-plugin": "^3.0.2"
   },
   "scripts": {

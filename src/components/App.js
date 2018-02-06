@@ -7,8 +7,10 @@ import 'leaflet/dist/leaflet.css';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import FontIcon from 'material-ui/FontIcon';
-import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
+import MapIcon from 'material-ui/svg-icons/maps/map';
+import FarmIcon from 'material-ui/svg-icons/image/nature-people';
+import CropIcon from 'material-ui/svg-icons/places/spa';
+import SwipeableViews from 'react-swipeable-views';
 //React Modules
 import MainBarUI from './MainBarUI.react';
 // Style Modules
@@ -25,9 +27,9 @@ class App extends Component {
           <MainBarUI/>
           <div style={AppRootStyle.topSpaceStyle}/>
           <Tabs>
-            <Tab icon={<FontIcon className = "material-icons" > phone</FontIcon>} label="RECENTS"/>
-            <Tab icon={<FontIcon className = "material-icons" > favorite</FontIcon>} label="FAVORITES"/>
-            <Tab icon={<MapsPersonPin />} label="NEARBY"/>
+            <Tab icon={<MapIcon />} label="Map"/>
+            <Tab icon={<FarmIcon />} label="Farms"/>
+            <Tab icon={<CropIcon />} label="Crops"/>
           </Tabs>
           <header>
             <h1>Welcome to th Hummingbird starter app</h1>
