@@ -17,13 +17,13 @@ import MainBarUI from './MainBarUI.react';
 import AppRootStyle from '../styles/AppRootStyle';
 
 import farm from '../data/farm.json';
-import crops from '../data/crops.json';
 
 class MapModule extends Component {
 
   constructor(props) {
     super(props);
     this.handleChangeTab = this.handleChangeTab.bind(this);
+    // this.setMapDimensions = this.setMapDimensions.bind(this);
     this.state = {
       slideIndex: 0,
       mapDimensions: {
@@ -38,6 +38,24 @@ class MapModule extends Component {
     this.setState({slideIndex: value});
   }
 
+  // setMapDimensions() {
+  //   let newHeight = window.innerHeight - 135;
+  //   let nextDimensions = this.state.mapDimensions;
+  //   nextDimensions.height = newHeight;
+  //   this.setState({mapDimensions: nextDimensions});
+  //   console.log("height: ", newHeight);
+  // }
+  changeMapDimensions(previousDimensions) {
+    let newHeight = window.innerHeight - 135;
+    let nextDimensions = {
+      width: previousDimensions.width,
+      height: previousDimensions.height
+    };
+    nextDimensions.height = newHeight;
+    this.setState({mapDimensions: nextDimensions});
+    console.log("height: ", newHeight);
+  }
+
   render() {
     return (<div>
       <Map style={this.state.mapDimensions} center={farm.centre.coordinates} zoom={13}>
@@ -45,6 +63,16 @@ class MapModule extends Component {
       </Map>
     </div>);
   }
+
+  componentDidMount() {
+    this.changeMapDimensions(this.state.mapDimensions);
+    window.addEventListener("resize", this.changeMapDimensions.bind(this, this.state.mapDimensions));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.changeMapDimensions.bind(this, this.state.mapDimensions));
+  }
+
 }
 
 export default MapModule;
