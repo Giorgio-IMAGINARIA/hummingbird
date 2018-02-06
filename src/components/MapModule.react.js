@@ -26,7 +26,6 @@ class MapModule extends Component {
     };
     nextDimensions.height = newHeight;
     this.setState({mapDimensions: nextDimensions});
-    console.log("height: ", newHeight);
   }
 
   render() {
