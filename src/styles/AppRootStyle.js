@@ -19,10 +19,15 @@ let style = {
     width: '100%',
     height: '64px'
   },
-  snackBarStyle : {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
+  fixedTabsStyle: {
+    width: '100%',
+    marginTop: '63px',
+    position: 'fixed',
+    zIndex: '2'
+  },
+  swipeableViewsStyle: {
+    width: '100%',
+    marginTop: '71px'
   }
 }
 
