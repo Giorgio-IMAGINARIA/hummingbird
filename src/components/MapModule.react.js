@@ -3,48 +3,21 @@ import React, {Component} from 'react';
 // Leaflet
 import {Map, TileLayer, GeoJSON} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-//Material UI Modules
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import MapIcon from 'material-ui/svg-icons/maps/map';
-import FieldIcon from 'material-ui/svg-icons/image/nature-people';
-import CropIcon from 'material-ui/svg-icons/places/spa';
-import SwipeableViews from 'react-swipeable-views';
-//React Modules
-import MainBarUI from './MainBarUI.react';
-// Style Modules
-import AppRootStyle from '../styles/AppRootStyle';
-
+// Data
 import farm from '../data/farm.json';
 
 class MapModule extends Component {
 
   constructor(props) {
     super(props);
-    this.handleChangeTab = this.handleChangeTab.bind(this);
-    // this.setMapDimensions = this.setMapDimensions.bind(this);
     this.state = {
-      slideIndex: 0,
       mapDimensions: {
         width: '100%',
         height: '500px'
       }
     };
-
   }
 
-  handleChangeTab(value) {
-    this.setState({slideIndex: value});
-  }
-
-  // setMapDimensions() {
-  //   let newHeight = window.innerHeight - 135;
-  //   let nextDimensions = this.state.mapDimensions;
-  //   nextDimensions.height = newHeight;
-  //   this.setState({mapDimensions: nextDimensions});
-  //   console.log("height: ", newHeight);
-  // }
   changeMapDimensions(previousDimensions) {
     let newHeight = window.innerHeight - 135;
     let nextDimensions = {
