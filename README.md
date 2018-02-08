@@ -16,4 +16,4 @@ Having had more time I would have developed a logic for selecting fields in the 
 That's something that I would have achieved through a Flex architecture using action-creators, dispatchers, stores and store listeners to open the pop-ups.
 
 # N.B.
-I had to use "nextFarm.centre.coordinates.reverse();" to get the right coordinates from the API. There could be a bug in the data provided.
+I had to use "nextFarm.centre.coordinates.reverse();" to get the right coordinates from the API. There could be a bug in the data provided. ;)
