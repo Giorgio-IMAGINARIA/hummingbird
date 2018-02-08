@@ -2,10 +2,14 @@
 import React, {Component} from 'react';
 // Stores
 import StoreModal from '../stores/StoreModal';
+import StoreCrops from '../stores/StoreCrops';
 // MaterialUI
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Checkbox from 'material-ui/Checkbox';
+// Style Modules
+import ModalStyle from '../styles/ModalStyle';
 
 class Modal extends Component {
   constructor(props) {
@@ -15,12 +19,16 @@ class Modal extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.state = {
       open: false,
-      fieldName: ''
+      fieldName: '',
+      checkboxes: ''
     };
   }
 
   handleOpen(name) {
-    this.setState({open: true, fieldName: name});
+    console.log('StoreCrops: ', StoreCrops.getCrops());
+    let checkboxes = [];
+    checkboxes = StoreCrops.getCrops().map((item, index) => <Checkbox key={index} label={item.name} style={ModalStyle.checkbox}/>);
+    this.setState({open: true, fieldName: name, checkboxes: checkboxes});
   }
 
   handleClose() {
@@ -39,8 +47,8 @@ class Modal extends Component {
     ];
     return (<div>
       <RaisedButton label="Dialog" onClick={this.handleOpen}/>
-      <Dialog title={this.state.fieldName} actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
-        
+      <Dialog autoScrollBodyContent={true} title={this.state.fieldName} actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
+        {this.state.checkboxes}
       </Dialog>
 
     </div>);
