@@ -11,23 +11,11 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
-// Data
-import farm from '../data/farm.json';
 
 class FieldsModule extends Component {
   constructor(props) {
     super(props);
     this.onCurrentStoreFarmChange = this.onCurrentStoreFarmChange.bind(this);
-    this.state = {
-      farm: {
-        name: '',
-        centre: {
-          coordinates: [51.5074, 0.1278],
-          type: "Point"
-        },
-        fields: []
-      }
-    };
     this.createFieldTable = this.createFieldTable.bind(this);
     this.state = {
       fieldsArray: []
@@ -36,13 +24,10 @@ class FieldsModule extends Component {
   }
 
   onCurrentStoreFarmChange() {
-    let nextFarm = StoreFarm.getFarm();
-    nextFarm.centre.coordinates.reverse();
-    this.setState({farm: nextFarm});
+    this.createFieldTable(StoreFarm.getFarm().fields)
   }
 
-  createFieldTable() {
-    let nextArray: Array<any> = farm.fields;
+  createFieldTable(nextArray) {
     let fieldList: Array<any> = [];
     nextArray.forEach((item, index) => {
       let elementToCreate: any = <TableRow key={index}>
@@ -56,7 +41,7 @@ class FieldsModule extends Component {
   }
 
   componentWillMount() {
-    this.createFieldTable();
+    this.createFieldTable([]);
   }
 
   render() {
