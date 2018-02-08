@@ -5,23 +5,12 @@ import StoreAddress from '../stores/StoreAddress';
 // Other libraries
 import 'whatwg-fetch';
 
-interface ActionObject {
-  type: string,
-  parameter: Array<any>
-}
-
-interface ActionErrorObject {
-  type: string,
-  parameter: string
-}
-
 interface QueryObject {
   query: string
 }
 
 export default function(queryToSubmit : QueryObject): void {
   let route: string = `${StoreAddress.getAddressRoot()}${queryToSubmit.query}`;
-  console.log('route: ', route);
   fetch(route, {method: 'GET'}).then((response) => {
     return response.json()
   }).then((objectRetrieved) => {
@@ -33,7 +22,7 @@ export default function(queryToSubmit : QueryObject): void {
 }
 
 function dispatchAction(parameter, query) {
-  let Action: ActionObject = {
+  let Action = {
     type: `update_${query}`,
     parameter: parameter
   };

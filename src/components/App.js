@@ -15,6 +15,7 @@ import MainBarUI from './MainBarUI.react';
 import MapModule from './MapModule.react';
 import FieldsModule from './FieldsModule.react';
 import CropsModule from './CropsModule.react';
+import Modal from './Modal.react';
 // Style Modules
 import AppRootStyle from '../styles/AppRootStyle';
 
@@ -48,6 +49,7 @@ class App extends Component {
             <FieldsModule/>
             <CropsModule/>
           </SwipeableViews>
+          <Modal/>
         </div>
       </MuiThemeProvider>
     </div>);

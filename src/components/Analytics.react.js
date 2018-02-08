@@ -1,69 +1,40 @@
 // React
 import React, {Component} from 'react';
 // Stores
-import StoreCrops from '../stores/StoreCrops';
-// MaterialUI
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from 'material-ui/Table';
+import StoreYeld from '../stores/StoreYeld';
 // Style Modules
 import AnalyticsStyle from '../styles/AnalyticsStyle';
 
 class Analytics extends Component {
   constructor(props) {
     super(props);
-    this.onCurrentStoreCropsChange = this.onCurrentStoreCropsChange.bind(this);
-    this.createCropsTable = this.createCropsTable.bind(this);
+    this.onCurrentStoreYeldChange = this.onCurrentStoreYeldChange.bind(this);
     this.state = {
-      cropsArray: []
+      yeldValue: 0
     };
-
   }
 
-  onCurrentStoreCropsChange() {
-    this.createCropsTable(StoreCrops.getCrops())
-  }
-
-  createCropsTable(nextArray) {
-    let cropsList: Array<any> = [];
-    nextArray.forEach((item, index) => {
-      let elementToCreate: any = <TableRow key={index}>
-        <TableRowColumn>{item.name}</TableRowColumn>
-        <TableRowColumn>{item.expected_yield}</TableRowColumn>
-        <TableRowColumn>{item.disease_risk_factor}</TableRowColumn>
-        <TableRowColumn>{item.price_per_tonne}</TableRowColumn>
-      </TableRow>;
-      cropsList.push(elementToCreate);
-    });
-    this.setState({cropsArray: cropsList});
-  }
-
-  componentWillMount() {
-    this.createCropsTable([]);
+  onCurrentStoreYeldChange() {
+    this.setState({yeldValue: StoreYeld.getYeld()});
   }
 
   render() {
     return (<div style={AnalyticsStyle.mainWrap}>
       <p style={AnalyticsStyle.topText}>
-        Y
+        Yeld
       </p>
       <p style={AnalyticsStyle.bottomText}>
-        34
+        {this.state.yeldValue}
       </p>
     </div>);
   }
 
   componentDidMount() {
-    StoreCrops.addChangeListener(this.onCurrentStoreCropsChange);
+    StoreYeld.addChangeListener(this.onCurrentStoreYeldChange);
   }
 
   componentWillUnmount() {
-    StoreCrops.removeChangeListener(this.onCurrentStoreCropsChange);
+    StoreYeld.removeChangeListener(this.onCurrentStoreYeldChange);
   }
 }
 
