@@ -1,10 +1,13 @@
 // React
 import React, {Component} from 'react';
+//Action Creators
+import ActionCreatorQueryAPI from '../actions/ActionCreatorQueryAPI';
 // Leaflet
 import {Map, TileLayer, GeoJSON} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 // Data
 import farm from '../data/farm.json';
+//Stores
 
 class MapModule extends Component {
 
@@ -37,6 +40,7 @@ class MapModule extends Component {
   }
 
   componentDidMount() {
+    ActionCreatorQueryAPI({query: 'farm'});
     this.changeMapDimensions(this.state.mapDimensions);
     window.addEventListener("resize", this.changeMapDimensions.bind(this, this.state.mapDimensions));
   }
