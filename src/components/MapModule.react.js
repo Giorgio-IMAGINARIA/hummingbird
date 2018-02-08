@@ -5,7 +5,6 @@ import StoreFarm from '../stores/StoreFarm';
 // Leaflet
 import {Map, TileLayer, GeoJSON} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-//Stores
 
 class MapModule extends Component {
 

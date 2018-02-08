@@ -1,11 +1,25 @@
 let style = {
   mainWrap : {
-    width: '100%',
-    height: 'inherit',
+    width: '50px',
+    height: '50px',
+    backgroundColor: 'white',
+    opacity: '0.7',
+    border: '1px #212121 solid',
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+
   },
+  topText:{
+    fontSize: '10px',
+    margin: '0'
+  },
+  bottomText:{
+    fontSize: '20px',
+    margin: '0'
+  },
+
   appWrap : {
     display: 'flex',
     flexDirection: 'column',

@@ -11,8 +11,10 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
+// Style Modules
+import AnalyticsStyle from '../styles/AnalyticsStyle';
 
-class CropsModule extends Component {
+class Analytics extends Component {
   constructor(props) {
     super(props);
     this.onCurrentStoreCropsChange = this.onCurrentStoreCropsChange.bind(this);
@@ -46,20 +48,13 @@ class CropsModule extends Component {
   }
 
   render() {
-    return (<div>
-      <Table>
-        <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-          <TableRow>
-            <TableHeaderColumn>Name</TableHeaderColumn>
-            <TableHeaderColumn>Ey</TableHeaderColumn>
-            <TableHeaderColumn>Drf</TableHeaderColumn>
-            <TableHeaderColumn>£/t</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-          {this.state.cropsArray}
-        </TableBody>
-      </Table>
+    return (<div style={AnalyticsStyle.mainWrap}>
+      <p style={AnalyticsStyle.topText}>
+        Y
+      </p>
+      <p style={AnalyticsStyle.bottomText}>
+        34
+      </p>
     </div>);
   }
 
@@ -72,4 +67,4 @@ class CropsModule extends Component {
   }
 }
 
-export default CropsModule;
+export default Analytics;
