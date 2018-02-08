@@ -1,7 +1,5 @@
 // React
 import React, {Component} from 'react';
-//Action Creators
-import ActionCreatorQueryAPI from '../actions/ActionCreatorQueryAPI';
 // Stores
 import StoreFarm from '../stores/StoreFarm';
 // Leaflet
@@ -56,7 +54,6 @@ class MapModule extends Component {
   }
 
   componentDidMount() {
-    ActionCreatorQueryAPI({query: 'farm'});
     this.changeMapDimensions(this.state.mapDimensions);
     window.addEventListener("resize", this.changeMapDimensions.bind(this, this.state.mapDimensions));
     StoreFarm.addChangeListener(this.onCurrentStoreFarmChange);

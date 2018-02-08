@@ -1,5 +1,7 @@
 // React
 import React, {Component} from 'react';
+// Stores
+import StoreCrops from '../stores/StoreCrops';
 // MaterialUI
 import {
   Table,
@@ -10,13 +12,12 @@ import {
   TableRowColumn
 } from 'material-ui/Table';
 // Data
-import farm from '../data/farm.json';
-// Data
 import crops from '../data/crops.json';
 
 class CropsModule extends Component {
   constructor(props) {
     super(props);
+    this.onCurrentStoreCropsChange = this.onCurrentStoreCropsChange.bind(this);
     this.createCropsTable = this.createCropsTable.bind(this);
     this.state = {
       cropsArray: []
@@ -24,8 +25,11 @@ class CropsModule extends Component {
 
   }
 
-  createCropsTable() {
-    let nextArray: Array<any> = crops;
+  onCurrentStoreCropsChange() {
+    this.createCropsTable(StoreCrops.getCrops())
+  }
+
+  createCropsTable(nextArray) {
     let cropsList: Array<any> = [];
     nextArray.forEach((item, index) => {
       let elementToCreate: any = <TableRow key={index}>
@@ -40,12 +44,11 @@ class CropsModule extends Component {
   }
 
   componentWillMount() {
-    this.createCropsTable();
+    this.createCropsTable([]);
   }
 
   render() {
     return (<div>
-      {/* {crops.map(crop => <li key={crop.name}>{crop.name}</li>)} */}
       <Table>
         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
           <TableRow>
@@ -60,6 +63,14 @@ class CropsModule extends Component {
         </TableBody>
       </Table>
     </div>);
+  }
+
+  componentDidMount() {
+    StoreCrops.addChangeListener(this.onCurrentStoreCropsChange);
+  }
+
+  componentWillUnmount() {
+    StoreCrops.removeChangeListener(this.onCurrentStoreCropsChange);
   }
 }
 

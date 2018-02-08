@@ -1,5 +1,7 @@
 // React
 import React, {Component} from 'react';
+//Action Creators
+import ActionCreatorQueryAPI from '../actions/ActionCreatorQueryAPI';
 //Material UI Modules
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -49,6 +51,11 @@ class App extends Component {
         </div>
       </MuiThemeProvider>
     </div>);
+  }
+
+  componentDidMount() {
+    ActionCreatorQueryAPI({query: 'farm'});
+    ActionCreatorQueryAPI({query: 'crops'});
   }
 }
 
