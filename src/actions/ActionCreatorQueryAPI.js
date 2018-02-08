@@ -20,23 +20,21 @@ interface QueryObject {
 }
 
 export default function(queryToSubmit : QueryObject): void {
-
-  console.log('queryToSubmit: ', queryToSubmit);
   let route: string = `${StoreAddress.getAddressRoot()}${queryToSubmit.query}`;
   console.log('route: ', route);
   fetch(route, {method: 'GET'}).then((response) => {
     return response.json()
   }).then((objectRetrieved) => {
-    dispatchAction(objectRetrieved);
+    dispatchAction(objectRetrieved, queryToSubmit.query);
   }).catch((ex) => {
     console.error('parsing failed', ex);
     return false;
   });
 }
 
-function dispatchAction(parameter) {
+function dispatchAction(parameter, query) {
   let Action: ActionObject = {
-    type: 'update_farm_fields',
+    type: `update_${query}`,
     parameter: parameter
   };
   AppDispatcher.dispatch(Action);
