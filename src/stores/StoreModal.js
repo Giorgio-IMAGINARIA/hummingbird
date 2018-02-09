@@ -24,7 +24,6 @@ class StoreModal extends EventEmitter {
   }
 
   setName(parameter) {
-    console.log('parameter: ', parameter);
     this.name = parameter.modalName;
   }
 

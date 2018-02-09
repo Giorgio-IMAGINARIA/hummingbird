@@ -1,21 +1,22 @@
 // React
 import React, {Component} from 'react';
 // Stores
-import StoreYeld from '../stores/StoreYeld';
+import StoreSelectedCrops from '../stores/StoreSelectedCrops';
 // Style Modules
 import AnalyticsStyle from '../styles/AnalyticsStyle';
 
 class Analytics extends Component {
   constructor(props) {
     super(props);
-    this.onCurrentStoreYeldChange = this.onCurrentStoreYeldChange.bind(this);
+    this.onCurrentStoreSelectedCropsChange = this.onCurrentStoreSelectedCropsChange.bind(this);
     this.state = {
       yeldValue: 0
     };
   }
 
-  onCurrentStoreYeldChange() {
-    this.setState({yeldValue: StoreYeld.getYeld()});
+  onCurrentStoreSelectedCropsChange() {
+    console.log('aiaia');
+    this.setState({yeldValue: StoreSelectedCrops.getYeld()});
   }
 
   render() {
@@ -30,11 +31,11 @@ class Analytics extends Component {
   }
 
   componentDidMount() {
-    StoreYeld.addChangeListener(this.onCurrentStoreYeldChange);
+    StoreSelectedCrops.addChangeListener(this.onCurrentStoreSelectedCropsChange);
   }
 
   componentWillUnmount() {
-    StoreYeld.removeChangeListener(this.onCurrentStoreYeldChange);
+    StoreSelectedCrops.removeChangeListener(this.onCurrentStoreSelectedCropsChange);
   }
 }
 

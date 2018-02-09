@@ -7,15 +7,8 @@ class StoreSelectedCrops extends EventEmitter {
 
   constructor() {
     super();
-    this.selectedCrops = [
-      {
-        fieldName: 'Big Field North',
-        appliedCrops: ['Winter Wheat - Sundance', 'Winter Wheat - Dickens']
-      }, {
-        fieldName: 'House Rear',
-        appliedCrops: ['Sprint Wheat - Granary', 'Winter Wheat - Reflectance']
-      }
-    ];
+    this.yeld = 0;
+    this.selectedCrops = [];
     this.dispatchToken = AppDispatcher.register(this.handleAction.bind(this));
   }
 
@@ -25,6 +18,10 @@ class StoreSelectedCrops extends EventEmitter {
 
   removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
+  }
+
+  getYeld() {
+    return this.yeld;
   }
 
   getSelectedCrops() {
@@ -45,7 +42,11 @@ class StoreSelectedCrops extends EventEmitter {
       };
       this.selectedCrops.push(newObject);
     };
+    this.calculateYeld();
     this.emitChange();
+  }
+  calculateYeld(){
+
   }
 
   handleAction(Action) {
