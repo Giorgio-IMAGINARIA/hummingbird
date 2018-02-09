@@ -36,14 +36,12 @@ class FieldsModule extends Component {
 
   createFieldTable(nextArray) {
     let fieldList: Array<any> = [];
-    nextArray.forEach((item, index) => {
-      let elementToCreate: any = <TableRow onMouseDown={this.selectRow.bind(this, item.name)} style={FieldsModuleStyle.tableRowColumnStyle} key={index}>
-        <TableRowColumn>{item.name}</TableRowColumn>
-        <TableRowColumn>{item.hectares}</TableRowColumn>
-        <TableRowColumn>{item.disease_susceptibility}</TableRowColumn>
-      </TableRow>;
-      fieldList.push(elementToCreate);
-    });
+    fieldList= nextArray.map((item, index)=>
+    <TableRow onMouseDown={this.selectRow.bind(this, item.name)} style={FieldsModuleStyle.tableRowColumnStyle} key={index}>
+      <TableRowColumn>{item.name}</TableRowColumn>
+      <TableRowColumn>{item.hectares}</TableRowColumn>
+      <TableRowColumn>{item.disease_susceptibility}</TableRowColumn>
+    </TableRow> );
     this.setState({fieldsArray: fieldList});
   }
 

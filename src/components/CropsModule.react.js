@@ -29,15 +29,12 @@ class CropsModule extends Component {
 
   createCropsTable(nextArray) {
     let cropsList: Array<any> = [];
-    nextArray.forEach((item, index) => {
-      let elementToCreate: any = <TableRow key={index}>
-        <TableRowColumn>{item.name}</TableRowColumn>
-        <TableRowColumn>{item.expected_yield}</TableRowColumn>
-        <TableRowColumn>{item.disease_risk_factor}</TableRowColumn>
-        <TableRowColumn>{item.price_per_tonne}</TableRowColumn>
-      </TableRow>;
-      cropsList.push(elementToCreate);
-    });
+    cropsList = nextArray.map((item, index) => <TableRow key={index}>
+      <TableRowColumn>{item.name}</TableRowColumn>
+      <TableRowColumn>{item.expected_yield}</TableRowColumn>
+      <TableRowColumn>{item.disease_risk_factor}</TableRowColumn>
+      <TableRowColumn>{item.price_per_tonne}</TableRowColumn>
+    </TableRow>);
     this.setState({cropsArray: cropsList});
   }
 
