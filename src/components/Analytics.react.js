@@ -10,21 +10,21 @@ class Analytics extends Component {
     super(props);
     this.onCurrentStoreSelectedCropsChange = this.onCurrentStoreSelectedCropsChange.bind(this);
     this.state = {
-      yeldValue: 0
+      yieldValue: 0
     };
   }
 
   onCurrentStoreSelectedCropsChange() {
-    this.setState({yeldValue: StoreSelectedCrops.getYeld()});
+    this.setState({yieldValue: StoreSelectedCrops.getYield()});
   }
 
   render() {
     return (<div style={AnalyticsStyle.mainWrap}>
       <p style={AnalyticsStyle.topText}>
-        Yeld
+        Yield
       </p>
       <p style={AnalyticsStyle.bottomText}>
-        {this.state.yeldValue}
+        {this.state.yieldValue}
       </p>
     </div>);
   }

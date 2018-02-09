@@ -10,7 +10,7 @@ class StoreSelectedCrops extends EventEmitter {
 
   constructor() {
     super();
-    this.yeld = 0;
+    this.yield = 0;
     this.selectedCrops = [];
     this.dispatchToken = AppDispatcher.register(this.handleAction.bind(this));
   }
@@ -23,8 +23,8 @@ class StoreSelectedCrops extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
-  getYeld() {
-    return this.yeld;
+  getYield() {
+    return this.yield;
   }
 
   getSelectedCrops() {
@@ -45,13 +45,13 @@ class StoreSelectedCrops extends EventEmitter {
       };
       this.selectedCrops.push(newObject);
     };
-    this.yeld = this.precisionRound(this.calculateYeld(), 2);
+    this.yield = this.precisionRound(this.calculateYield(), 2);
     this.emitChange();
   }
 
-  calculateYeld() {
-    let yeldArray = this.selectedCrops.map(field => this.calculateSingleField(field));
-    return this.calculateSumArray(yeldArray);
+  calculateYield() {
+    let yieldArray = this.selectedCrops.map(field => this.calculateSingleField(field));
+    return this.calculateSumArray(yieldArray);
   }
 
   calculateSingleField(field) {
@@ -61,7 +61,7 @@ class StoreSelectedCrops extends EventEmitter {
   processValues(fieldValues, averageValues) {
     let valueToReturn = averageValues.averageCropsDiseaseRiskFactor === 0 || fieldValues.disease_susceptibility === 0
       ? 0
-      : (averageValues.averageCropsExpectedYeld * fieldValues.hectares * averageValues.averageCropsPricePerTonne) / (averageValues.averageCropsDiseaseRiskFactor * fieldValues.disease_susceptibility);
+      : (averageValues.averageCropsExpectedYield * fieldValues.hectares * averageValues.averageCropsPricePerTonne) / (averageValues.averageCropsDiseaseRiskFactor * fieldValues.disease_susceptibility);
     return valueToReturn;
   }
 
@@ -75,16 +75,16 @@ class StoreSelectedCrops extends EventEmitter {
   }
 
   getAverageCropsValues(appliedCrops) {
-    let cropsExpectedYeldArray = [];
+    let cropsExpectedYieldArray = [];
     let cropsDiseaseRiskFactorArray = [];
     let cropsPricePerTonneArray = [];
     appliedCrops.forEach(appliedCrop => {
       let cropDetail = StoreCrops.getCrops().find(cropDetail => cropDetail.name === appliedCrop);
-      cropsExpectedYeldArray.push(cropDetail.expected_yield);
+      cropsExpectedYieldArray.push(cropDetail.expected_yield);
       cropsDiseaseRiskFactorArray.push(cropDetail.disease_risk_factor);
       cropsPricePerTonneArray.push(cropDetail.price_per_tonne);
     });
-    return {averageCropsExpectedYeld: this.calculateAverageArray(cropsExpectedYeldArray), averageCropsDiseaseRiskFactor: this.calculateAverageArray(cropsDiseaseRiskFactorArray), averageCropsPricePerTonne: this.calculateAverageArray(cropsPricePerTonneArray)}
+    return {averageCropsExpectedYield: this.calculateAverageArray(cropsExpectedYieldArray), averageCropsDiseaseRiskFactor: this.calculateAverageArray(cropsDiseaseRiskFactorArray), averageCropsPricePerTonne: this.calculateAverageArray(cropsPricePerTonneArray)}
   }
 
   precisionRound(number, precision) {
