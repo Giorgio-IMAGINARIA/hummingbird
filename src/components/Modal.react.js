@@ -67,13 +67,7 @@ class Modal extends Component {
   }
 
   clickOnCheck(checkBoxLabel) {
-    StoreCrops.getCrops().map((item, index) => {
-      StoreSelectedCrops.getSelectedCrops().forEach((crops) => {
-        if (this.state.fieldName === crops.fieldName && checkBoxLabel === item.name) {
-          ActionCreatorModifySelectedCrops({field: this.state.fieldName, cropToChange: checkBoxLabel})
-        };
-      });
-    });
+    ActionCreatorModifySelectedCrops({field: this.state.fieldName, cropToChange: checkBoxLabel});
   }
 
   render() {
@@ -83,7 +77,6 @@ class Modal extends Component {
       <Dialog autoScrollBodyContent={true} title={this.state.fieldName} actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
         {this.state.checkboxes}
       </Dialog>
-
     </div>);
   }
 
