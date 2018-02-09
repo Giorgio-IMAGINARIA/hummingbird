@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 // Stores
 import StoreModal from '../stores/StoreModal';
 import StoreCrops from '../stores/StoreCrops';
+import StoreSelectedCrops from '../stores/StoreSelectedCrops';
 // MaterialUI
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -23,11 +24,35 @@ class Modal extends Component {
       checkboxes: ''
     };
   }
+  clickOnCheck(checkBoxLabel) {
+    let checkboxes = [];
+    let selectedCrops = StoreSelectedCrops.getSelectedCrops();
+    checkboxes = StoreCrops.getCrops().map((item, index) => {
+      let isChecked = false;
+      selectedCrops.forEach((crops) => {
+        if (this.state.fieldName === crops.fieldName) {
+          isChecked = checkBoxLabel === item.name
+            ? isChecked = !crops.appliedCrops.includes(checkBoxLabel)
+            : isChecked = crops.appliedCrops.includes(item.name);
+        };
+      });
+      return <Checkbox onCheck={this.clickOnCheck.bind(this, item.name)} checked={isChecked} key={index} label={item.name} style={ModalStyle.checkbox}/>
+    });
+    this.setState({checkboxes: checkboxes});
+  }
 
   handleOpen(name) {
-    console.log('StoreCrops: ', StoreCrops.getCrops());
     let checkboxes = [];
-    checkboxes = StoreCrops.getCrops().map((item, index) => <Checkbox key={index} label={item.name} style={ModalStyle.checkbox}/>);
+    let selectedCrops = StoreSelectedCrops.getSelectedCrops();
+    checkboxes = StoreCrops.getCrops().map((item, index) => {
+      let isChecked = false;
+      selectedCrops.forEach((crops) => {
+        if (name === crops.fieldName) {
+          isChecked = crops.appliedCrops.includes(item.name);
+        };
+      });
+      return <Checkbox onCheck={this.clickOnCheck.bind(this, item.name)} checked={isChecked} key={index} label={item.name} style={ModalStyle.checkbox}/>
+    });
     this.setState({open: true, fieldName: name, checkboxes: checkboxes});
   }
 
@@ -41,10 +66,7 @@ class Modal extends Component {
   }
 
   render() {
-    const actions = [
-      <FlatButton label="Cancel" primary={true} onClick={this.handleClose}/>,
-      <FlatButton label="Submit" primary={true} keyboardFocused={true} onClick={this.handleClose}/>
-    ];
+    const actions = [<FlatButton keyboardFocused={true} label="Close" primary={true} onClick={this.handleClose}/>];
     return (<div>
       <RaisedButton label="Dialog" onClick={this.handleOpen}/>
       <Dialog autoScrollBodyContent={true} title={this.state.fieldName} actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
