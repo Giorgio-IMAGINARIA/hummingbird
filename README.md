@@ -21,11 +21,47 @@ The CropsModule and FieldsModule and show details regarding the data imported fr
 
 The FieldsModule has clickable rows, upon clicking one, the related details on the crops currently selected are shown in a dialog. The checkboxes provided allow the user to add or delete crops for the field and to change the overall yield value.
 
-The states of the checkboxes are controlled through the ActionCreatorModifySelectedCrops and the StoreSelectedCrops. All the calculations related to the yield are made in the latter. 
+The states of the checkboxes are controlled through the ActionCreatorModifySelectedCrops and the StoreSelectedCrops. All the calculations related to the yield are made in the latter.
+
+Relevant parts of the calculations are:
+
+getAverageCropsValues(appliedCrops) {
+  let cropsExpectedYieldArray = [];
+  let cropsDiseaseRiskFactorArray = [];
+  let cropsPricePerTonneArray = [];
+  appliedCrops.forEach(appliedCrop => {
+    let cropDetail = StoreCrops.getCrops().find(cropDetail => cropDetail.name === appliedCrop);
+    cropsExpectedYieldArray.push(cropDetail.expected_yield);
+    cropsDiseaseRiskFactorArray.push(cropDetail.disease_risk_factor);
+    cropsPricePerTonneArray.push(cropDetail.price_per_tonne);
+  });
+  return {averageCropsExpectedYield: this.calculateAverageArray(cropsExpectedYieldArray), averageCropsDiseaseRiskFactor: this.calculateAverageArray(cropsDiseaseRiskFactorArray), averageCropsPricePerTonne: this.calculateAverageArray(cropsPricePerTonneArray)}
+}
+
+That returns an object containing the average values for the crops in a single field
+
+processValues(fieldValues, averageValues) {
+  let valueToReturn = averageValues.averageCropsDiseaseRiskFactor === 0 || fieldValues.disease_susceptibility === 0
+    ? 0
+    : (averageValues.averageCropsExpectedYield * fieldValues.hectares * averageValues.averageCropsPricePerTonne) / (averageValues.averageCropsDiseaseRiskFactor * fieldValues.disease_susceptibility);
+  return valueToReturn;
+}
+
+that returns the yield for a single field. The whole logic is protected against dividing values for zero.
+
+The final yield value is provided with a precision of two digits after the comma.
+
+this.yield = this.precisionRound(this.calculateYield(), 2);
+
+precisionRound(number, precision) {
+  let factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+}
+
+Every time crops are changed through the checkboxes, a new calculation occurs for the yield that is then represented in the Analytics component.
 
 # FUTURE IMPROVEMENTS
-Having had more time I would have developed a logic for selecting fields in the map and to then showing data related to that specific field in a pop-up. Also It would have been interesting to double-click in one of the rows of the tables and to have a pop-up of the map centred on that specific field which would have been highlighted with a different colour.
-That's something that I would have achieved through a Flex architecture using action-creators, dispatchers, stores and store listeners to open the pop-ups.
+Having had more time I would have developed a logic for selecting fields in the map and to then showing data related to that specific field in a dialog. Also It would have been interesting to double-click in one of the rows of the tables and to have a pop-up of the map centred on that specific field which would have been highlighted with a different colour.
 
 # N.B.
-I had to use "nextFarm.centre.coordinates.reverse();" to get the right coordinates from the API. There could be a bug in the data provided. ;)
+I had to use "nextFarm.centre.coordinates.reverse();" to get the right coordinates for the map from the API, differently from the static data provided for testing.
