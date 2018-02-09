@@ -58,19 +58,38 @@ class StoreSelectedCrops extends EventEmitter {
   }
 
   calculateSingleField(field) {
-    let fields = StoreFarm.getFarm().fields;
+
     // console.log('fields: ', fields);
     // console.log('field: ', field);
 
     let averageValues = this.getAverageCropsValues(field.appliedCrops);
-    this.getFieldValues(field.fieldName);
-    // console.log('averageValues: ', averageValues);
+    let fieldValues = this.getFieldValues(field.fieldName);
+
+    this.processValues(fieldValues, averageValues);
 
     return 6;
   }
 
-  getFieldValues(fieldName){
+processValues(fieldValues, averageValues){
+  
+  console.log('averageValues: ', averageValues);
+  console.log('fieldValues: ', fieldValues);
+
+}
+
+
+  getFieldValues(fieldName) {
     console.log('fieldName: ', fieldName);
+    let fieldValues;
+    StoreFarm.getFarm().fields.forEach(field => {
+      if (fieldName === field.name) {
+        fieldValues = {
+          hectares: field.hectares,
+          disease_susceptibility: field.disease_susceptibility
+        };
+      };
+    });
+    return fieldValues
   }
 
   getAverageCropsValues(appliedCrops) {
