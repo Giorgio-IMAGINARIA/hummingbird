@@ -37,27 +37,21 @@ class Modal extends Component {
   }
 
   handleOpen(name) {
-    let checkboxes = [];
-    let selectedCrops = StoreSelectedCrops.getSelectedCrops();
-    checkboxes = StoreCrops.getCrops().map((item, index) => {
-      let isChecked = false;
-      selectedCrops.forEach((crops) => {
-        if (name === crops.fieldName) {
-          isChecked = crops.appliedCrops.includes(item.name);
-        };
-      });
-      return <Checkbox onCheck={this.clickOnCheck.bind(this, item.name)} checked={isChecked} key={index} label={item.name} style={ModalStyle.checkbox}/>
-    });
-    this.setState({open: true, fieldName: name, checkboxes: checkboxes});
+    this.ModifyCheckboxState(name);
+    this.setState({open: true, fieldName: name});
   }
 
   onCurrentStoreSelectedCropsChange() {
+    this.ModifyCheckboxState(this.state.fieldName);
+  }
+
+  ModifyCheckboxState(fieldName) {
     let checkboxes = [];
     let selectedCrops = StoreSelectedCrops.getSelectedCrops();
     checkboxes = StoreCrops.getCrops().map((item, index) => {
       let isChecked = false;
       selectedCrops.forEach((crops) => {
-        if (this.state.fieldName === crops.fieldName) {
+        if (fieldName === crops.fieldName) {
           isChecked = crops.appliedCrops.includes(item.name);
         };
       });
