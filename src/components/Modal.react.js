@@ -1,5 +1,7 @@
 // React
 import React, {Component} from 'react';
+//Action Creators
+import ActionCreatorModifySelectedCrops from '../actions/ActionCreatorModifySelectedCrops';
 // Stores
 import StoreModal from '../stores/StoreModal';
 import StoreCrops from '../stores/StoreCrops';
@@ -16,6 +18,7 @@ class Modal extends Component {
   constructor(props) {
     super(props);
     this.onCurrentStoreModalChange = this.onCurrentStoreModalChange.bind(this);
+    this.onCurrentStoreSelectedCropsChange = this.onCurrentStoreSelectedCropsChange.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.state = {
@@ -24,21 +27,13 @@ class Modal extends Component {
       checkboxes: ''
     };
   }
-  clickOnCheck(checkBoxLabel) {
-    let checkboxes = [];
-    let selectedCrops = StoreSelectedCrops.getSelectedCrops();
-    checkboxes = StoreCrops.getCrops().map((item, index) => {
-      let isChecked = false;
-      selectedCrops.forEach((crops) => {
-        if (this.state.fieldName === crops.fieldName) {
-          isChecked = checkBoxLabel === item.name
-            ? isChecked = !crops.appliedCrops.includes(checkBoxLabel)
-            : isChecked = crops.appliedCrops.includes(item.name);
-        };
-      });
-      return <Checkbox onCheck={this.clickOnCheck.bind(this, item.name)} checked={isChecked} key={index} label={item.name} style={ModalStyle.checkbox}/>
-    });
-    this.setState({checkboxes: checkboxes});
+
+  handleClose() {
+    this.setState({open: false});
+  }
+
+  onCurrentStoreModalChange() {
+    this.handleOpen(StoreModal.getName());
   }
 
   handleOpen(name) {
@@ -56,13 +51,29 @@ class Modal extends Component {
     this.setState({open: true, fieldName: name, checkboxes: checkboxes});
   }
 
-  handleClose() {
-    this.setState({open: false});
+  onCurrentStoreSelectedCropsChange() {
+    let checkboxes = [];
+    let selectedCrops = StoreSelectedCrops.getSelectedCrops();
+    checkboxes = StoreCrops.getCrops().map((item, index) => {
+      let isChecked = false;
+      selectedCrops.forEach((crops) => {
+        if (this.state.fieldName === crops.fieldName) {
+          isChecked = crops.appliedCrops.includes(item.name);
+        };
+      });
+      return <Checkbox onCheck={this.clickOnCheck.bind(this, item.name)} checked={isChecked} key={index} label={item.name} style={ModalStyle.checkbox}/>
+    });
+    this.setState({checkboxes: checkboxes});
   }
 
-  onCurrentStoreModalChange() {
-    console.log('open modal');
-    this.handleOpen(StoreModal.getName());
+  clickOnCheck(checkBoxLabel) {
+    StoreCrops.getCrops().map((item, index) => {
+      StoreSelectedCrops.getSelectedCrops().forEach((crops) => {
+        if (this.state.fieldName === crops.fieldName && checkBoxLabel === item.name) {
+          ActionCreatorModifySelectedCrops({field: this.state.fieldName, cropToChange: checkBoxLabel})
+        };
+      });
+    });
   }
 
   render() {
@@ -78,10 +89,12 @@ class Modal extends Component {
 
   componentDidMount() {
     StoreModal.addChangeListener(this.onCurrentStoreModalChange);
+    StoreSelectedCrops.addChangeListener(this.onCurrentStoreSelectedCropsChange);
   }
 
   componentWillUnmount() {
     StoreModal.removeChangeListener(this.onCurrentStoreModalChange);
+    StoreSelectedCrops.removeChangeListener(this.onCurrentStoreSelectedCropsChange);
   }
 }
 

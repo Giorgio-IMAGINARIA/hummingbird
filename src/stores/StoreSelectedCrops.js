@@ -32,13 +32,27 @@ class StoreSelectedCrops extends EventEmitter {
   }
 
   setSelectedCrops(parameter) {
-    this.selectedCrops = parameter;
+    console.log('parameter: ', parameter);
+    console.log('this.selectedCrops: ', this.selectedCrops);
+    let foundIndex = this.selectedCrops.findIndex((item, index) => item.fieldName === parameter.field);
+    if (foundIndex > -1) {
+      let innerFoundIndex = this.selectedCrops[foundIndex].appliedCrops.findIndex((item, index) => item === parameter.cropToChange);
+      innerFoundIndex > -1
+        ? this.selectedCrops[foundIndex].appliedCrops.splice(innerFoundIndex, 1)
+        : this.selectedCrops[foundIndex].appliedCrops.push(parameter.cropToChange);
+    } else {
+      let newObject = {
+        fieldName: parameter.field,
+        appliedCrops: [parameter.cropToChange]
+      };
+      this.selectedCrops.push()
+    };
+    this.emitChange();
   }
 
   handleAction(Action) {
     if (Action.type === 'update_selected_Crops') {
       this.setSelectedCrops(Action.parameter);
-      this.emitChange();
     }
   }
 
