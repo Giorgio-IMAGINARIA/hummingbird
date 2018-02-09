@@ -60,6 +60,24 @@ precisionRound(number, precision) {
 
 Every time crops are changed through the checkboxes, a new calculation occurs for the yield that is then represented in the Analytics component.
 
+The state of the checkboxes is handled by the following function:
+
+ModifyCheckboxState(fieldName) {
+  let checkboxes = [];
+  let selectedCrops = StoreSelectedCrops.getSelectedCrops();
+  checkboxes = StoreCrops.getCrops().map((item, index) => {
+    let isChecked;
+    let foundCrops = selectedCrops.find(crops => fieldName === crops.fieldName);
+    isChecked = foundCrops
+      ? foundCrops.appliedCrops.includes(item.name)
+      : false;
+    return <Checkbox onCheck={this.clickOnCheck.bind(this, item.name)} checked={isChecked} key={index} label={item.name} style={ModalStyle.checkbox}/>
+  });
+  this.setState({checkboxes: checkboxes});
+}
+
+The function dynamically creates a list of Checkboxes. It's important to notice how the clickOnCheck function has the context bound to this and gets the parameter item.name related to each element created.
+
 # FUTURE IMPROVEMENTS
 Having had more time I would have developed a logic for selecting fields in the map and to then showing data related to that specific field in a dialog. Also It would have been interesting to double-click in one of the rows of the tables and to have a pop-up of the map centred on that specific field which would have been highlighted with a different colour.
 

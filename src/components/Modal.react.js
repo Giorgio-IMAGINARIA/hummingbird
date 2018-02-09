@@ -49,12 +49,11 @@ class Modal extends Component {
     let checkboxes = [];
     let selectedCrops = StoreSelectedCrops.getSelectedCrops();
     checkboxes = StoreCrops.getCrops().map((item, index) => {
-      let isChecked = false;
-      selectedCrops.forEach((crops) => {
-        if (fieldName === crops.fieldName) {
-          isChecked = crops.appliedCrops.includes(item.name);
-        };
-      });
+      let isChecked;
+      let foundCrops = selectedCrops.find(crops => fieldName === crops.fieldName);
+      isChecked = foundCrops
+        ? foundCrops.appliedCrops.includes(item.name)
+        : false;
       return <Checkbox onCheck={this.clickOnCheck.bind(this, item.name)} checked={isChecked} key={index} label={item.name} style={ModalStyle.checkbox}/>
     });
     this.setState({checkboxes: checkboxes});
