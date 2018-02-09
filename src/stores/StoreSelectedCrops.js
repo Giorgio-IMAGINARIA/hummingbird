@@ -46,16 +46,11 @@ class StoreSelectedCrops extends EventEmitter {
       this.selectedCrops.push(newObject);
     };
     this.yeld = this.precisionRound(this.calculateYeld(), 2);
-    console.log('this.yeld: ', this.yeld);
     this.emitChange();
   }
 
   calculateYeld() {
-    let summedYeld = 0;
-    let yeldArray = []
-    this.selectedCrops.forEach(field => {
-      yeldArray.push(this.calculateSingleField(field));
-    });
+    let yeldArray = this.selectedCrops.map(field => this.calculateSingleField(field));
     return this.calculateSumArray(yeldArray);
   }
 
@@ -68,15 +63,11 @@ class StoreSelectedCrops extends EventEmitter {
   }
 
   getFieldValues(fieldName) {
-    let fieldValues;
-    StoreFarm.getFarm().fields.forEach(field => {
-      if (fieldName === field.name) {
-        fieldValues = {
-          hectares: field.hectares,
-          disease_susceptibility: field.disease_susceptibility
-        };
-      };
-    });
+    let foundField = StoreFarm.getFarm().fields.find(field => fieldName === field.name);
+    let fieldValues = {
+      hectares: foundField.hectares,
+      disease_susceptibility: foundField.disease_susceptibility
+    };
     return fieldValues
   }
 
@@ -85,13 +76,10 @@ class StoreSelectedCrops extends EventEmitter {
     let cropsDiseaseRiskFactorArray = [];
     let cropsPricePerTonneArray = [];
     appliedCrops.forEach(appliedCrop => {
-      StoreCrops.getCrops().forEach(cropDetail => {
-        if (cropDetail.name === appliedCrop) {
-          cropsExpectedYeldArray.push(cropDetail.expected_yield);
-          cropsDiseaseRiskFactorArray.push(cropDetail.disease_risk_factor);
-          cropsPricePerTonneArray.push(cropDetail.price_per_tonne);
-        }
-      })
+      let cropDetail = StoreCrops.getCrops().find(cropDetail => cropDetail.name === appliedCrop);
+      cropsExpectedYeldArray.push(cropDetail.expected_yield);
+      cropsDiseaseRiskFactorArray.push(cropDetail.disease_risk_factor);
+      cropsPricePerTonneArray.push(cropDetail.price_per_tonne);
     });
     return {averageCropsExpectedYeld: this.calculateAverageArray(cropsExpectedYeldArray), averageCropsDiseaseRiskFactor: this.calculateAverageArray(cropsDiseaseRiskFactorArray), averageCropsPricePerTonne: this.calculateAverageArray(cropsPricePerTonneArray)}
   }

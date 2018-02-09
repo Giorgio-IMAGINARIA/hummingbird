@@ -15,7 +15,6 @@ class Analytics extends Component {
   }
 
   onCurrentStoreSelectedCropsChange() {
-    console.log('aiaia');
     this.setState({yeldValue: StoreSelectedCrops.getYeld()});
   }
 
