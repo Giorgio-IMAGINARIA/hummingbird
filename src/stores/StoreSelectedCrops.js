@@ -45,41 +45,29 @@ class StoreSelectedCrops extends EventEmitter {
       };
       this.selectedCrops.push(newObject);
     };
-    this.yeld = this.calculateYeld();
+    this.yeld = this.precisionRound(this.calculateYeld(), 2);
+    console.log('this.yeld: ', this.yeld);
     this.emitChange();
   }
 
   calculateYeld() {
     let summedYeld = 0;
+    let yeldArray = []
     this.selectedCrops.forEach(field => {
-      summedYeld = summedYeld + this.calculateSingleField(field);
+      yeldArray.push(this.calculateSingleField(field));
     });
-    return summedYeld;
+    return this.calculateSumArray(yeldArray);
   }
 
   calculateSingleField(field) {
-
-    // console.log('fields: ', fields);
-    // console.log('field: ', field);
-
-    let averageValues = this.getAverageCropsValues(field.appliedCrops);
-    let fieldValues = this.getFieldValues(field.fieldName);
-
-    this.processValues(fieldValues, averageValues);
-
-    return 6;
+    return this.processValues(this.getFieldValues(field.fieldName), this.getAverageCropsValues(field.appliedCrops));
   }
 
-processValues(fieldValues, averageValues){
-  
-  console.log('averageValues: ', averageValues);
-  console.log('fieldValues: ', fieldValues);
-
-}
-
+  processValues(fieldValues, averageValues) {
+    return (averageValues.averageCropsExpectedYeld * fieldValues.hectares * averageValues.averageCropsPricePerTonne) / (averageValues.averageCropsDiseaseRiskFactor * fieldValues.disease_susceptibility)
+  }
 
   getFieldValues(fieldName) {
-    console.log('fieldName: ', fieldName);
     let fieldValues;
     StoreFarm.getFarm().fields.forEach(field => {
       if (fieldName === field.name) {
@@ -108,8 +96,16 @@ processValues(fieldValues, averageValues){
     return {averageCropsExpectedYeld: this.calculateAverageArray(cropsExpectedYeldArray), averageCropsDiseaseRiskFactor: this.calculateAverageArray(cropsDiseaseRiskFactorArray), averageCropsPricePerTonne: this.calculateAverageArray(cropsPricePerTonneArray)}
   }
 
+  precisionRound(number, precision) {
+    let factor = Math.pow(10, precision);
+    return Math.round(number * factor) / factor;
+  }
+
   calculateAverageArray(arr) {
-    return arr.reduce((a, b) => a + b, 0) / arr.length;
+    return this.calculateSumArray(arr) / arr.length;
+  }
+  calculateSumArray(arr) {
+    return arr.reduce((a, b) => a + b, 0);
   }
 
   handleAction(Action) {

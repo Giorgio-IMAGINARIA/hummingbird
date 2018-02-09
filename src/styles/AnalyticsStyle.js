@@ -16,7 +16,7 @@ let style = {
     margin: '0'
   },
   bottomText:{
-    fontSize: '20px',
+    fontSize: '12px',
     margin: '0'
   }
 }
