@@ -59,7 +59,10 @@ class StoreSelectedCrops extends EventEmitter {
   }
 
   processValues(fieldValues, averageValues) {
-    return (averageValues.averageCropsExpectedYeld * fieldValues.hectares * averageValues.averageCropsPricePerTonne) / (averageValues.averageCropsDiseaseRiskFactor * fieldValues.disease_susceptibility)
+    let valueToReturn = averageValues.averageCropsDiseaseRiskFactor === 0 || fieldValues.disease_susceptibility === 0
+      ? 0
+      : (averageValues.averageCropsExpectedYeld * fieldValues.hectares * averageValues.averageCropsPricePerTonne) / (averageValues.averageCropsDiseaseRiskFactor * fieldValues.disease_susceptibility);
+    return valueToReturn;
   }
 
   getFieldValues(fieldName) {
@@ -90,8 +93,12 @@ class StoreSelectedCrops extends EventEmitter {
   }
 
   calculateAverageArray(arr) {
-    return this.calculateSumArray(arr) / arr.length;
+    let valueToReturn = arr.length === 0
+      ? 0
+      : this.calculateSumArray(arr) / arr.length;
+    return valueToReturn;
   }
+
   calculateSumArray(arr) {
     return arr.reduce((a, b) => a + b, 0);
   }
